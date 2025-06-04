@@ -23,6 +23,7 @@ public final class RequestManager {
                 .when()
                     .get()
                 .then()
+                    .log().ifError()
                     .spec(responseSpecification)
                     .extract().as(clazz);
     }

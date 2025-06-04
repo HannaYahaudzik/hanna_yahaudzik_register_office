@@ -21,13 +21,11 @@ public final class SpecConfig {
                 .setBaseUri(ReadPropertyFile.getProperties("BASE_URL"))
                 .setAuth(RestAssured.basic(ReadPropertyFile.getProperties("USERNAME"), ReadPropertyFile.getProperties("PASSWORD")))
                 .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
                 .build();
     }
 
     public static ResponseSpecification responseSpecification() {
         return new ResponseSpecBuilder()
-                .log(LogDetail.ALL)
                 .expectStatusCode(STATUS_CODE_SUCCESS)
                 .build();
     }
