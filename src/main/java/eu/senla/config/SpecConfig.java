@@ -1,6 +1,6 @@
 package eu.senla.config;
 
-import eu.senla.ReadPropertyFile;
+import eu.senla.utilities.ReadPropertyFile;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
