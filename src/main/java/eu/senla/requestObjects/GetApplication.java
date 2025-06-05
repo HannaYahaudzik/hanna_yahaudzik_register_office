@@ -8,6 +8,7 @@ import lombok.Getter;
 public class GetApplication {
 
     private final String BASE_PATH = "getApplications";
+
     @Getter
     private GetApplicationResponse response;
 
