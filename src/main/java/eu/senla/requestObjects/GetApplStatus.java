@@ -10,8 +10,11 @@ public class GetApplStatus {
 
     @Getter
     private GetApplStatusResponse response;
+    @Getter
+    private Integer applicationId;
 
     public GetApplStatus(final Integer applicationId) {
+        this.applicationId = applicationId;
         response = RequestManager.getRequest(BASE_PATH + "/" + applicationId, GetApplStatusResponse.class);
     }
 }
