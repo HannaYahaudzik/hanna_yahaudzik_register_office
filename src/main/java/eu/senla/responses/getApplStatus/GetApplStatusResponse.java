@@ -1,4 +1,4 @@
-package eu.senla.templates.getApplStatus;
+package eu.senla.responses.getApplStatus;
 
 import lombok.Getter;
 

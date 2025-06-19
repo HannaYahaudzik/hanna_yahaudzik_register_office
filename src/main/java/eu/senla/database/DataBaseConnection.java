@@ -1,79 +1,66 @@
 package eu.senla.database;
 
+import eu.senla.responses.getApplication.ApplicationData;
 import eu.senla.utilities.ReadPropertyFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DataBaseConnection {
 
-    private static final String DBurl = ReadPropertyFile.getProperties("DB_URL");
-    private static final String user = ReadPropertyFile.getProperties("DB_USERNAME");
-    private static final String password = ReadPropertyFile.getProperties("DB_PASSWORD");
+    private static final String DB_URL = ReadPropertyFile.getProperties("DB_URL");
+    private static final String DB_USERNAME = ReadPropertyFile.getProperties("DB_USERNAME");
+    private static final String DB_PASSWORD = ReadPropertyFile.getProperties("DB_PASSWORD");
 
-    private static final Logger log = LoggerFactory.getLogger(DataBaseConnection.class);
+//    private static final Logger log = LoggerFactory.getLogger(DataBaseConnection.class);
 
-    private static Connection connection;
+    private static String executeQuery(final String query, final String columnName) throws SQLException {
+        String result;
+        try (
+                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ResultSet resultSet = statement.executeQuery(query)
+        ) {
+            resultSet.next();
 
-    // to remove
-    private static Statement stmt = null;
-    //    private static PreparedStatement pstmt = null;
-    private static ResultSet rs = null;
-
-    public static Connection connectToDB() {
-        log.info("Connect to DB " + DBurl + " by " + user);
-
-        try {
-            Class.forName("org.postgresql.Driver");
-
-            connection = DriverManager.getConnection(DBurl, user, password);
-            log.info("Connection to DB successful!");
-
-        } catch (SQLException e) {
-            log.error("Connection to DB failed!\n" + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            log.error(e.getMessage());
+            result = resultSet.getString(columnName);
         }
-
-        return connection;
+        return result;
     }
 
-    public static String checkDatabase() throws SQLException {
-
-        String selectQuery = "SELECT a.* FROM reg_office.applicants AS a";
-        String value = null;
-        try {
-            stmt = connectToDB().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            log.info("Send request to DB: " + selectQuery);
-            rs = stmt.executeQuery(selectQuery);
-            if (rs.next()) {
-                value = rs.getString(1);
-            } else {
-                value = null;
-            }
-
-        } finally {
-            connection.close();
-            return value;
+    private static ApplicationData executeQuery(final String query) throws SQLException {
+        ApplicationData applicationData = new ApplicationData();
+        try (
+                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ResultSet resultSet = statement.executeQuery(query)
+        ) {
+            resultSet.next();
+            System.out.println("ResultSet = " + resultSet.toString());
+            applicationData.setCitizenId(resultSet.getInt("citizenid"));
+            applicationData.setApplicantId(resultSet.getInt("applicantid"));
+            applicationData.setStaffId(resultSet.getInt("staffid"));
+            applicationData.setDateOfApplication(resultSet.getString("dateofapplication"));
+            applicationData.setKindOfApplication(resultSet.getString("kindofapplication"));
+            applicationData.setStatusOfApplication(resultSet.getString("statusofapplication"));
+            applicationData.setChannel(resultSet.getString("channel"));
         }
+        return applicationData;
     }
 
     public static String getApplicationCount() throws SQLException {
-        String query = "SELECT count(*) FROM reg_office.applications";
-        String result = null;
-
-        try{
-            stmt = connectToDB().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            log.info("Send request to DB: " + query);
-            rs = stmt.executeQuery(query);
-
-            rs.next();
-            result = rs.getString(1);
-        }finally {
-            connection.close();
-            return result;
-        }
+        String columnName = "applicationCount";
+        String query = "SELECT count(*) AS " + columnName + " FROM reg_office.applications";
+        return executeQuery(query, columnName);
     }
 
+    public static ApplicationData getApplicationData(final int applicationId) throws SQLException {
+        String query = "SELECT * FROM reg_office.applications WHERE applicationid = " + applicationId;
+        return executeQuery(query);
+    }
 }

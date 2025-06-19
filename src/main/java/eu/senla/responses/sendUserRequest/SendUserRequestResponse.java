@@ -1,4 +1,4 @@
-package eu.senla.templates.sendUserRequest;
+package eu.senla.responses.sendUserRequest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

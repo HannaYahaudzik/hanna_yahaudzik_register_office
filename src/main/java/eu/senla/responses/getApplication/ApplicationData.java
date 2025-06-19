@@ -1,9 +1,11 @@
-package eu.senla.templates.getApplication;
+package eu.senla.responses.getApplication;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ApplicationData {
 
     @JsonProperty("applicationid")

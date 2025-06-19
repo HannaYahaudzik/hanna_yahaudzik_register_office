@@ -1,4 +1,4 @@
-package eu.senla.templates.getApplication;
+package eu.senla.responses.getApplication;
 
 import lombok.Getter;
 

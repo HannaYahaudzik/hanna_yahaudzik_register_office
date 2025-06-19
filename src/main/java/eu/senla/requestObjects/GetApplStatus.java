@@ -1,6 +1,6 @@
 package eu.senla.requestObjects;
 
-import eu.senla.templates.getApplStatus.GetApplStatusResponse;
+import eu.senla.responses.getApplStatus.GetApplStatusResponse;
 import eu.senla.utilities.RequestManager;
 import lombok.Getter;
 

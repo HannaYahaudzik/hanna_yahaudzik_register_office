@@ -1,6 +1,6 @@
 package eu.senla.requestObjects;
 
-import eu.senla.templates.getApplication.GetApplicationResponse;
+import eu.senla.responses.getApplication.GetApplicationResponse;
 import eu.senla.utilities.RequestManager;
 import lombok.Getter;
 

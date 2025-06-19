@@ -1,4 +1,4 @@
-package eu.senla.templates.sendUserRequest;
+package eu.senla.responses.sendUserRequest;
 
 public class SendUserRequestBody {
     private String mode;

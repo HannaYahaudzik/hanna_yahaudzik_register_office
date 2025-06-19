@@ -10,16 +10,6 @@ public class SendUserRequestTest {
     @Test
     public void schemaValidation() {
 
-        try {
-            System.out.println(
-                    DataBaseConnection.checkDatabase()
-            );
-            System.out.println(
-                    DataBaseConnection.getApplicationCount()
-            );
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
 
 //        Integer applicantId = new SendUserRequest()
