@@ -1,13 +1,10 @@
 package eu.senla.responses.getApplication;
 
-import lombok.Getter;
-
 import java.util.List;
 
-@Getter
-public class GetApplicationResponse {
-
-    private String total;
-    private List<ApplicationData> data;
-    private String requestId;
+public record GetApplicationResponse(
+        String total,
+        List<ApplicationData> data,
+        String requestId
+) {
 }

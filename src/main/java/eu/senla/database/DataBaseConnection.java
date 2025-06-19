@@ -2,8 +2,8 @@ package eu.senla.database;
 
 import eu.senla.responses.getApplication.ApplicationData;
 import eu.senla.utilities.ReadPropertyFile;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,13 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DataBaseConnection {
+public final class DataBaseConnection {
 
     private static final String DB_URL = ReadPropertyFile.getProperties("DB_URL");
     private static final String DB_USERNAME = ReadPropertyFile.getProperties("DB_USERNAME");
     private static final String DB_PASSWORD = ReadPropertyFile.getProperties("DB_PASSWORD");
 
-//    private static final Logger log = LoggerFactory.getLogger(DataBaseConnection.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseConnection.class);
 
     private static String executeQuery(final String query, final String columnName) throws SQLException {
         String result;
@@ -26,31 +26,33 @@ public class DataBaseConnection {
                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 ResultSet resultSet = statement.executeQuery(query)
         ) {
+            LOGGER.info("Connection to DB is successful!\nBD query was sent: " + query);
             resultSet.next();
-
             result = resultSet.getString(columnName);
         }
         return result;
     }
 
-    private static ApplicationData executeQuery(final String query) throws SQLException {
-        ApplicationData applicationData = new ApplicationData();
+    private static ApplicationData executeQuery(final String query, final int applicationId) throws SQLException {
         try (
                 Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 ResultSet resultSet = statement.executeQuery(query)
         ) {
+            LOGGER.info("Connection to DB is successful!\nBD query was sent: " + query);
             resultSet.next();
-            System.out.println("ResultSet = " + resultSet.toString());
-            applicationData.setCitizenId(resultSet.getInt("citizenid"));
-            applicationData.setApplicantId(resultSet.getInt("applicantid"));
-            applicationData.setStaffId(resultSet.getInt("staffid"));
-            applicationData.setDateOfApplication(resultSet.getString("dateofapplication"));
-            applicationData.setKindOfApplication(resultSet.getString("kindofapplication"));
-            applicationData.setStatusOfApplication(resultSet.getString("statusofapplication"));
-            applicationData.setChannel(resultSet.getString("channel"));
+            return new ApplicationData(
+                    applicationId,
+                    resultSet.getInt("citizenid"),
+                    resultSet.getInt("applicantid"),
+                    resultSet.getInt("staffid"),
+                    resultSet.getString("dateofapplication"),
+                    resultSet.getString("kindofapplication"),
+                    resultSet.getString("statusofapplication"),
+                    resultSet.getString("channel"),
+                    null
+            );
         }
-        return applicationData;
     }
 
     public static String getApplicationCount() throws SQLException {
@@ -61,6 +63,10 @@ public class DataBaseConnection {
 
     public static ApplicationData getApplicationData(final int applicationId) throws SQLException {
         String query = "SELECT * FROM reg_office.applications WHERE applicationid = " + applicationId;
-        return executeQuery(query);
+        return executeQuery(query, applicationId);
+    }
+
+    private DataBaseConnection() {
+
     }
 }

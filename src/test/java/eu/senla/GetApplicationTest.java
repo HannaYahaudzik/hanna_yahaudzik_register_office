@@ -5,39 +5,44 @@ import eu.senla.requestObjects.GetApplication;
 import eu.senla.responses.getApplication.ApplicationData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.sql.SQLException;
 
 public class GetApplicationTest {
 
     @Test
-    public void schemaValidation(){
+    public void schemaValidation() {
         Assert.assertNotNull(
                 new GetApplication()
                         .getResponse()
         );
     }
 
-    @Test (priority = 1)
+    @Test(priority = 1)
     public void checkTotal() throws SQLException {
         Assert.assertEquals(
                 new GetApplication()
                         .getResponse()
-                        .getTotal(),
+                        .total(),
                 DataBaseConnection.getApplicationCount()
         );
     }
 
-    @Test (priority = 1)
-    public void checkApplication() throws SQLException {
+    @Test(priority = 1)
+    public void checkApplicationData() throws SQLException {
         ApplicationData applicationData = new GetApplication()
-                .getResponse().getData().get(0);
+                .getResponse().data().get(0);
 
-        ApplicationData expectedApplicationData = DataBaseConnection.getApplicationData(applicationData.getApplicationId());
+        ApplicationData expectedApplicationData = DataBaseConnection.getApplicationData(applicationData.applicationId());
 
-        Assert.assertEquals(
-                applicationData.getCitizenId(),
-                expectedApplicationData.getCitizenId()
-        );
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(applicationData.citizenId(), expectedApplicationData.citizenId());
+        softAssert.assertEquals(applicationData.applicantId(), expectedApplicationData.applicantId());
+        softAssert.assertEquals(applicationData.staffId(), expectedApplicationData.staffId());
+        softAssert.assertEquals(applicationData.kindOfApplication(), expectedApplicationData.kindOfApplication());
+        softAssert.assertEquals(applicationData.statusOfApplication(), expectedApplicationData.statusOfApplication());
+        softAssert.assertEquals(applicationData.channel(), expectedApplicationData.channel());
+        softAssert.assertAll();
     }
 }

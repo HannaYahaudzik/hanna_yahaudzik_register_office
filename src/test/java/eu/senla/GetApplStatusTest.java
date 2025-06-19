@@ -11,19 +11,19 @@ public class GetApplStatusTest {
     private Integer applicationId;
 
     @BeforeTest
-    public void getApplicationId(){
+    public final void getApplicationId() {
         this.applicationId = new GetApplication()
                 .getResponse()
-                .getData()
+                .data()
                 .get(0)
-                .getApplicationId();
+                .applicationId();
     }
 
     @Test
     public void schemaValidation() {
         String requestId = new GetApplStatus(applicationId)
                 .getResponse()
-                .getRequestId();
+                .requestId();
         Assert.assertNotNull(requestId);
     }
 }

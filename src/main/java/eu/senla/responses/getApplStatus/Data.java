@@ -1,17 +1,16 @@
 package eu.senla.responses.getApplStatus;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 
-@Getter
-public class Data {
+public record Data(
 
-    @JsonProperty("dateofapplication")
-    private String dateOfApplication;
+        @JsonProperty("dateofapplication")
+        String dateOfApplication,
 
-    @JsonProperty("kindofapplication")
-    private String kindOfApplication;
+        @JsonProperty("kindofapplication")
+        String kindOfApplication,
 
-    @JsonProperty("statusofapplication")
-    private String statusOfApplication;
+        @JsonProperty("statusofapplication")
+        String statusOfApplication
+) {
 }

@@ -13,8 +13,8 @@ public class GetApplStatus {
     @Getter
     private Integer applicationId;
 
-    public GetApplStatus(final Integer applicationId) {
-        this.applicationId = applicationId;
-        response = RequestManager.getRequest(BASE_PATH + "/" + applicationId, GetApplStatusResponse.class);
+    public GetApplStatus(final Integer id) {
+        this.applicationId = id;
+        response = RequestManager.getRequest(BASE_PATH + "/" + id, GetApplStatusResponse.class);
     }
 }

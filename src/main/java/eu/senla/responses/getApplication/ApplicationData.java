@@ -1,35 +1,31 @@
 package eu.senla.responses.getApplication;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class ApplicationData {
+public record ApplicationData(
 
-    @JsonProperty("applicationid")
-    private Integer applicationId;
+        @JsonProperty("applicationid")
+        Integer applicationId,
 
-    @JsonProperty("citizenid")
-    private Integer citizenId;
+        @JsonProperty("citizenid")
+        Integer citizenId,
 
-    @JsonProperty("applicantid")
-    private Integer applicantId;
+        @JsonProperty("applicantid")
+        Integer applicantId,
 
-    @JsonProperty("staffid")
-    private Integer staffId;
+        @JsonProperty("staffid")
+        Integer staffId,
 
-    @JsonProperty("dateofapplication")
-    private String dateOfApplication;
+        @JsonProperty("dateofapplication")
+        String dateOfApplication,
 
-    @JsonProperty("kindofapplication")
-    private String kindOfApplication;
+        @JsonProperty("kindofapplication")
+        String kindOfApplication,
 
-    @JsonProperty("statusofapplication")
-    private String statusOfApplication;
+        @JsonProperty("statusofapplication")
+        String statusOfApplication,
 
-    private String channel;
-    private String image;
-
+        String channel,
+        String image
+) {
 }
