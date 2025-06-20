@@ -45,7 +45,7 @@ public final class DataBaseConnection {
                     applicationId,
                     resultSet.getInt("citizenid"),
                     resultSet.getInt("applicantid"),
-                    resultSet.getInt("staffid"),
+                    (resultSet.getInt("staffid") != 0 ? resultSet.getInt("staffid") : null),
                     resultSet.getString("dateofapplication"),
                     resultSet.getString("kindofapplication"),
                     resultSet.getString("statusofapplication"),

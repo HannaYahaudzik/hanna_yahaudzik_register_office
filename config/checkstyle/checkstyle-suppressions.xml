@@ -12,11 +12,11 @@
 
     <!-- Doesn't check for Naming Conventions.                  -->
     <!-- See http://checkstyle.sf.net/config_naming.html -->
-    <suppress checks="MemberName" files="" />
+    <suppress files="" checks="MemberName"/>
 
-    <!-- Checks for Javadoc comments.                     -->
+    <!-- Doesn't check for Javadoc comments.                     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html -->
-    <suppress checks="JavadocVariable" files=""/>
+    <suppress files="" checks="JavadocVariable"/>
 
     <!-- Doesn't check for Javadoc comments.                     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html -->
@@ -25,5 +25,9 @@
     <!-- Doesn't check for common coding problems               -->
     <!-- See http://checkstyle.sf.net/config_coding.html -->
     <suppress files="entity" checks="HiddenField"/>
+
+    <!-- Doesn't check for common coding problems               -->
+    <!-- See http://checkstyle.sf.net/config_coding.html -->
+    <suppress files="" checks="AvoidInlineConditionals"/>
 
 </suppressions>
