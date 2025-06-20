@@ -37,12 +37,12 @@ public class GetApplicationTest {
         ApplicationData expectedApplicationData = DataBaseConnection.getApplicationData(applicationData.applicationId());
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(applicationData.citizenId(), expectedApplicationData.citizenId());
-        softAssert.assertEquals(applicationData.applicantId(), expectedApplicationData.applicantId());
-        softAssert.assertEquals(applicationData.staffId(), expectedApplicationData.staffId());
-        softAssert.assertEquals(applicationData.kindOfApplication(), expectedApplicationData.kindOfApplication());
-        softAssert.assertEquals(applicationData.statusOfApplication(), expectedApplicationData.statusOfApplication());
-        softAssert.assertEquals(applicationData.channel(), expectedApplicationData.channel());
+        softAssert.assertEquals(applicationData.citizenId(), expectedApplicationData.citizenId(), "Field 'citizenId' isn't equaled");
+        softAssert.assertEquals(applicationData.applicantId(), expectedApplicationData.applicantId(), "Field 'applicantId' isn't equaled");
+        softAssert.assertEquals(applicationData.staffId(), expectedApplicationData.staffId(), "Field 'staffId' isn't equaled");
+        softAssert.assertEquals(applicationData.kindOfApplication(), expectedApplicationData.kindOfApplication(), "Field 'kindOfApplication' isn't equaled");
+        softAssert.assertEquals(applicationData.statusOfApplication(), expectedApplicationData.statusOfApplication(), "Field 'statusOfApplication' isn't equaled");
+        softAssert.assertEquals(applicationData.channel(), expectedApplicationData.channel(), "Field 'channel' isn't equaled");
         softAssert.assertAll();
     }
 }
