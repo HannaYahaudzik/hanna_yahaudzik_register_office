@@ -3,6 +3,12 @@ plugins {
     id 'checkstyle'
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
+}
+
 checkstyle {
     toolVersion = "10.24.0"
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
