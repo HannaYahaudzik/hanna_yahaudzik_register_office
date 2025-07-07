@@ -13,9 +13,9 @@ public class GetApplStatusTest {
     @BeforeTest
     public final void getApplicationId() {
         this.applicationId = new GetApplication()
-                .getResponse()
+                .getDTOResponse()
                 .data()
-                .get(0)
+                .getFirst()
                 .applicationId();
     }
 

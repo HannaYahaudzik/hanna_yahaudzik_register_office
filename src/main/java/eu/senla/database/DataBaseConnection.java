@@ -39,7 +39,7 @@ public final class DataBaseConnection {
                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 ResultSet resultSet = statement.executeQuery(query)
         ) {
-            LOGGER.info("Connection to DB is successful!\nBD query was sent: " + query);
+            LOGGER.info("Connection to DB is successful!\nBD query was sent:\n" + query);
             resultSet.next();
             return new ApplicationData(
                     applicationId,
@@ -62,7 +62,11 @@ public final class DataBaseConnection {
     }
 
     public static ApplicationData getApplicationData(final int applicationId) throws SQLException {
-        String query = "SELECT * FROM reg_office.applications WHERE applicationid = " + applicationId;
+        String query = "SELECT channel, image , a.staffid , a.citizenid ,a.applicantid ,a.applicationid ,a.dateofapplication , "
+                + "a.kindofapplication ,a.statusofapplication \n"
+                + "FROM reg_office.applications a\n"
+                + "inner join reg_office.citizens c on c.citizenid = a.citizenid\n"
+                + "WHERE applicationid = " + applicationId;
         return executeQuery(query, applicationId);
     }
 
