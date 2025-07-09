@@ -15,7 +15,7 @@ public class GetApplStatusTest {
         this.applicationId = new GetApplication()
                 .getDTOResponse()
                 .data()
-                .getFirst()
+                .get(0)
                 .applicationId();
     }
 

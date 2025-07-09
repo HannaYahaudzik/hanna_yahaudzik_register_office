@@ -31,11 +31,11 @@ public class GetApplicationTest {
     }
 
     @Test(priority = 1)
-    public void checkFistApplicationData() throws SQLException {
+    public void checkFirstApplicationData() throws SQLException {
         ApplicationData applicationData = new GetApplication()
                 .getDTOResponse()
                 .data()
-                .getFirst();
+                .get(0);
 
         ApplicationData expectedApplicationData = DataBaseConnection.getApplicationData(applicationData.applicationId());
 
