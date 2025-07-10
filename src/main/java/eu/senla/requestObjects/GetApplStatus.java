@@ -1,6 +1,6 @@
 package eu.senla.requestObjects;
 
-import eu.senla.templates.getApplStatus.GetApplStatusResponse;
+import eu.senla.responses.getApplStatus.GetApplStatusResponse;
 import eu.senla.utilities.RequestManager;
 import lombok.Getter;
 
@@ -10,8 +10,11 @@ public class GetApplStatus {
 
     @Getter
     private GetApplStatusResponse response;
+    @Getter
+    private Integer applicationId;
 
-    public GetApplStatus(final Integer applicationId) {
-        response = RequestManager.getRequest(BASE_PATH + "/" + applicationId, GetApplStatusResponse.class);
+    public GetApplStatus(final Integer id) {
+        this.applicationId = id;
+        response = RequestManager.getRequest(BASE_PATH + "/" + id, GetApplStatusResponse.class);
     }
 }
